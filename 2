@@ -1,0 +1,38 @@
+I used the Foursquare API to explore the venues in neighborhoods with setting the limit as 20 venues and the radius 500 meter based on latitude and longitude of each Borough.
+I sorted the top 10 venues for each Borough by using KMeans- Clustering. the value of kcluster was set as 5.
+##Example
+latitude = 40.715337
+longitude = -74.008848
+url = 'https://api.foursquare.com/v2/venues/explore?client_id={}&client_secret={}&ll={},{}&v={}&radius={}&limit={}'.format(CLIENT_ID, CLIENT_SECRET, latitude, longitude, VERSION, radius, LIMIT)
+url
+import requests
+results = requests.get(url).json()
+'There are {} around Ecco restaurant.'.format(len(results['response']['groups'][0]['items']))
+items = results['response']['groups'][0]['items']
+items[0]
+dataframe = json_normalize(items) # flatten JSON
+
+# filter columns
+filtered_columns = ['venue.name', 'venue.categories'] + [col for col in dataframe.columns if col.startswith('venue.location.')] + ['venue.id']
+dataframe_filtered = dataframe.loc[:, filtered_columns]
+
+# filter the category for each row
+dataframe_filtered['venue.categories'] = dataframe_filtered.apply(get_category_type, axis=1)
+
+# clean columns
+dataframe_filtered.columns = [col.split('.')[-1] for col in dataframe_filtered.columns]
+
+dataframe_filtered.head(10)
+dataframe = json_normalize(items) # flatten JSON
+
+# filter columns
+filtered_columns = ['venue.name', 'venue.categories'] + [col for col in dataframe.columns if col.startswith('venue.location.')] + ['venue.id']
+dataframe_filtered = dataframe.loc[:, filtered_columns]
+
+# filter the category for each row
+dataframe_filtered['venue.categories'] = dataframe_filtered.apply(get_category_type, axis=1)
+
+# clean columns
+dataframe_filtered.columns = [col.split('.')[-1] for col in dataframe_filtered.columns]
+
+dataframe_filtered.head(10)
