@@ -1,0 +1,5 @@
+##Data description
+Firstly, we need to fetch and explore neighborhoods data of those two cities from Foursquare API. The information we want to focus on are restaurants, coffee shops and entertainment venues. We will choose one neighborhood from each city.
+We need to apply Neighborhood Segmentation and Clustering to analyzing the neighborhood data and prioritize the best restaurant location in both cities based on foot traffic and type of restaurants.
+##Methodology
+We need to explore two cities one by one with the same methodology. Firstly, we will take the processed data then we will extract that part of data from the prevoius data file,then explore both cities by using Foursquare API and visualize the results separately.
